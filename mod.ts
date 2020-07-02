@@ -1,3 +1,4 @@
+import { parse } from "https://deno.land/std/flags/mod.ts";
 import { ensureDir } from "https://deno.land/std/fs/ensure_dir.ts";
 import {
   yellow,
@@ -7,14 +8,31 @@ import {
 } from "https://deno.land/std/fmt/colors.ts";
 declare var Deno: any;
 
-const { args: [name] } = Deno;
+const parsedArgs = parse(Deno.args);
+let name = "";
+let path = "";
+
+if (!parsedArgs["_"].length) {
+  throw "Component name required";
+} else {
+  name = "" + parsedArgs["_"];
+}
+
+if (parsedArgs["p"]) {
+  path = parsedArgs["p"];
+} else if (parsedArgs["path"]) {
+  path = parsedArgs["path"];
+} else {
+  path = "app/components";
+}
+
 const compoName: string = name.split("-").map(
   (nameFragment: string): string =>
     nameFragment.charAt(0).toUpperCase() + nameFragment.slice(1),
   [],
 ).join("");
 const compoNameLc: string = compoName.toLowerCase();
-const compoPath: string = "./app/components/" + compoName + "/";
+const compoPath: string = `./${path}/${compoName}/`;
 
 const compoContent: string = `/*
  * External dependencies
