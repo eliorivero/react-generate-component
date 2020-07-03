@@ -2,19 +2,23 @@
 
 A tool to generate a React component
 
+![Generate React component](https://i2.wp.com/startfunction.com/wp-content/uploads/2020/07/reactgc.gif "Generate React component")
+
 ## Overview
 
-This tool was inpired by Ember's CLI tool to generate component. It will generate:
+This tool was inpired by Ember's CLI tool that generates a component. It will generate the following files in a single directory:
 
-- a React functional component
-- its SASS stylesheet
-- and a simple test using Jest and Enzyme
+- `index.js`, a React functional component
+- `style.scss`, its SASS stylesheet
+- `test.js`, a simple test using Jest and Enzyme
 
-Right now it will only write to `app/components` relative to the current directory. Will be adding more customization and component templates (like those using hooks, or Redux) soon.
+By default, it will write to `app/components` relative to the current directory, and it's possible to customize the path. Will be adding more customization and component templates (like those using hooks, or Redux) soon.
+
+For an overview of how this Deno CLI tool was created, visit https://startfunction.com/how-to-create-deno-cli-tool
 
 ## Install Deno
 
-You need Deno to run this. You can install it on macOS with:
+You need the Deno runtime to use this tool. You can install it on macOS with:
 
 ```
 brew install deno
@@ -30,8 +34,7 @@ Once you have Deno, you can run this directly from GitHub:
 deno run --allow-read --allow-write https://raw.githubusercontent.com/eliorivero/react-generate-component/master/mod.ts nav-bar
 ```
 
-You need both flags because it has to read the directory where it will write the file. If the directory doesn't exist, it will create it.
-This will generate:
+You need both `--allow-read` and `--allow-write` flags because it has to read the directory where it will write the file. If the directory doesn't exist, it will create it. This will generate:
 
 ```
 ./app/components/NavBar/index.js
@@ -53,9 +56,15 @@ it will generate:
 ./app/components/Button/test.js
 ```
 
+To specify a custom directory, you can use the -p option and run:
+
+```
+deno run --allow-read --allow-write https://raw.githubusercontent.com/eliorivero/react-generate-component/master/mod.ts button -p src/components
+```
+
 ## Install this tool
 
-Deno allows you to install this tool so it works offline:
+Deno also allows you to install this tool so it works offline:
 
 ```
 deno install --allow-read --allow-write --name reactgc https://raw.githubusercontent.com/eliorivero/react-generate-component/master/mod.ts
