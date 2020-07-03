@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
+import { parse, Args } from "https://deno.land/std/flags/mod.ts";
 import { ensureDir } from "https://deno.land/std/fs/ensure_dir.ts";
 import {
   yellow,
@@ -6,16 +6,19 @@ import {
   green,
   bold,
 } from "https://deno.land/std/fmt/colors.ts";
-declare var Deno: any;
 
-const parsedArgs = parse(Deno.args);
-let name = "";
-let path = "";
+const parsedArgs: Args = parse(Deno.args);
+let name: string = "";
+let path: string = "";
 
 if (!parsedArgs["_"].length) {
   throw "Component name required";
 } else {
   name = "" + parsedArgs["_"];
+}
+
+if (parsedArgs["p"] && "boolean" === typeof parsedArgs["p"]) {
+  throw "Bad Parameter. Perhaps you wanted to use --path?";
 }
 
 if (parsedArgs["p"]) {
