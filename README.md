@@ -37,9 +37,9 @@ deno run --allow-read --allow-write https://raw.githubusercontent.com/eliorivero
 You need both `--allow-read` and `--allow-write` flags because it has to read the directory where it will write the file. If the directory doesn't exist, it will create it. This will generate:
 
 ```
-./app/components/NavBar/index.js
-./app/components/NavBar/style.scss
-./app/components/NavBar/test.js
+app/components/NavBar/index.js
+app/components/NavBar/style.scss
+app/components/NavBar/test.js
 ```
 
 Without the hyphen:
@@ -51,16 +51,59 @@ deno run --allow-read --allow-write https://raw.githubusercontent.com/eliorivero
 it will generate:
 
 ```
-./app/components/Button/index.js
-./app/components/Button/style.scss
-./app/components/Button/test.js
+app/components/Button/index.js
+app/components/Button/style.scss
+app/components/Button/test.js
 ```
 
-To specify a custom directory, you can use the -p option and run:
+To specify a custom directory, you can use the `-p` option and run:
 
 ```
 deno run --allow-read --allow-write https://raw.githubusercontent.com/eliorivero/react-generate-component/master/mod.ts button -p src/components
 ```
+
+### Generating utility functions
+
+You can also generate simple functions passing the `-u` parameter:
+
+```
+deno run --allow-write --allow-read mod.ts is-data-loaded -u
+```
+
+and it will generate:
+
+```
+app/utils/isDataLoaded.js
+```
+
+### Using the provided name as directory
+
+If you want to pass something like `top-nav` as the component name so it's composed as `TopNav` but you still want to use `top-nav` as the component directory, you can provide the `-e` option and for an input like:
+
+```
+deno run --allow-write --allow-read mod.ts top-nav -e
+```
+
+and it will generate:
+
+```
+app/components/top-nav/index.js
+app/components/top-nav/style.scss
+app/components/top-nav/test.js
+```
+
+In the case of utility functions, the exact input will be used for the file name. This:
+
+```
+deno run --allow-write --allow-read mod.ts is-data-loaded -u -e
+```
+
+will generate:
+
+```
+app/utils/is-data-loaded.js
+```
+
 
 ## Install this tool
 
